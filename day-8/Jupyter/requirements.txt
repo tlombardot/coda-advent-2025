@@ -1,0 +1,6 @@
+contextily
+matplotlib
+folium
+plotly
+sqlalchemy
+pandas
