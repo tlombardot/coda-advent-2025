@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Stock 📅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Gestion de Stock</h1>
+    <form id="date-form">
+        <label for="date">Sélectionner une date :</label>
+        <input type="date" id="date" name="date" required>
+        <button type="submit">Valider la Sélection</button>
+    </form>
+</div>
+
+<script>
+    document.body.style.fontFamily = '"Comic Sans MS", "Comic Sans", cursive';
+    document.body.style.cursor = 'wait'; // Le curseur reste en sablier
+    document.body.style.transition = "transform 5s";
+
+    // Petite rotation nauséeuse toutes les 3 secondes
+    setInterval(() => {
+        document.body.style.transform = `rotate(${Math.random() * 2 - 1}deg)`;
+    }, 100);
+
+    const btn = document.querySelector('button');
+    const input = document.getElementById('date');
+    const form = document.getElementById('date-form');
+
+    // 2. Le Bouton Fuyard (il esquive la souris)
+    btn.style.position = 'fixed'; // On le sort du flux pour qu'il bouge librement
+    btn.style.transition = 'all 0.1s ease'; // Mouvement rapide
+    btn.style.zIndex = '9999';
+
+    btn.addEventListener('mouseover', function() {
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+        btn.innerText = "Attrape-moi ! 🏃‍♂️";
+        btn.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16); // Couleur aléatoire
+    });
+
+    // 3. Sabotage de l'input (une chance sur deux d'effacer la date quand on la change)
+    input.addEventListener('change', function() {
+        if (Math.random() > 0.5) {
+            setTimeout(() => {
+                this.value = '';
+                alert("Oups, j'ai oublié la date. Recommencez svp.");
+            }, 500);
+        }
+    });
+
+    // 4. L'Enfer des Popups (si on arrive à soumettre le formulaire)
+    // On remplace le comportement du formulaire par le nôtre
+    const originalSubmit = form.onsubmit; // On ne peut pas facilement tuer l'event listener anonyme, donc on intercepte avant
+
+    // On clone le bouton pour supprimer les anciens écouteurs (le code original) et mettre les nôtres
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+
+    newBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // La cascade de l'enfer
+        if(!confirm("Êtes-vous vraiment sûr de vouloir valider cette date ?")) return;
+        if(!confirm("C'est votre dernier mot ?")) return;
+        alert("Analyse de la date en cours... (ça peut être long)");
+
+        setTimeout(() => {
+            if(prompt("Veuillez recopier ce captcha pour continuer : 'Je suis lent'", "") !== "Je suis lent") {
+                alert("Captcha incorrect. Retour à la case départ.");
+                return;
+            }
+
+            alert("Erreur 418 : I'm a teapot.");
+            alert("Validation échouée. Veuillez réessayer ultérieurement (ou jamais).");
+            // Et on déplace le bouton encore une fois pour la forme
+            newBtn.style.top = '10px';
+            newBtn.style.left = '10px';
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>
