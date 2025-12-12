@@ -21,7 +21,7 @@ public class giftRegistry {
         }
         Gift duplicate = null;
         for (Gift g : gifts) {
-            if (g.childName == child && g.giftName.equals(gift)) {
+            if (g.childName.equals(child) && g.giftName.equals(gift)) {
                 duplicate = g;
             }
         }
@@ -29,7 +29,6 @@ public class giftRegistry {
             gifts.add(new Gift(child, gift, packed, "ok"));
             LastUpdated = new Date();
         }
-        return;
     }
 
     public boolean markPacked(String child) {

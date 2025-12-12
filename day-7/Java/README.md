@@ -23,6 +23,10 @@ if (child == "")
 // to
 if (child.isEmpty())
 ```
+- Remove return unnecessary in a void method
+```java
+return;
+```
 
 ## Adaptability issues
 - Change println to logger :
